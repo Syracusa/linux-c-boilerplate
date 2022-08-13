@@ -6,3 +6,6 @@ project(linuxcbp
 
 add_subdirectory(lib)
 add_subdirectory(apps)
+
+include(CTest)
+add_subdirectory(test)
