@@ -7,7 +7,8 @@
 
 #define TESTAPP_VERSION "v0.0.1"
 
-char* get_buildinfo(){
+char *get_buildinfo()
+{
     /* Get build time */
     char _date[] = __DATE__;
     char _time[] = __TIME__;
@@ -28,14 +29,15 @@ char* get_buildinfo(){
     return buildinfo;
 }
 
-int main(){
+int main()
+{
     LOGI("TestApp %s\n", TESTAPP_VERSION);
     LOGI("Build info\n%s\n", get_buildinfo());
 
     LOGI("Library Info\n%s\n", bp_get_libinfo());
     bp_initialize();
     LOGI("%s", bp_get_helloworld());
-    bp_finalize(); 
+    bp_finalize();
 
     LOGF("TestApp %s\n", TESTAPP_VERSION);
     LOGC("TestApp %s\n", TESTAPP_VERSION);
@@ -62,4 +64,3 @@ int main(){
     TLOGD("TestApp %s\n", TESTAPP_VERSION);
     return 0;
 }
-
