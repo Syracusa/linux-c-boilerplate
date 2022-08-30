@@ -1,6 +1,8 @@
 #include <string.h>
 #include <stdio.h>
 
+
+#define LIBINFO_BUFSIZE 300
 char *get_buildtime()
 {
     /* Get build time */
@@ -8,9 +10,7 @@ char *get_buildtime()
     char _time[] = __TIME__;
 
     /* Init buffer */
-    int buf_margin = 100;
-    int buflen = strlen(_date) + strlen(_time) + buf_margin;
-    char libinfo[buflen];
+    static char libinfo[LIBINFO_BUFSIZE];
     libinfo[0] = '\0';
 
     /* Write App Info */

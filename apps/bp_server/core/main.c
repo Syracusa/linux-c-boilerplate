@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "app.h"
+#include "server.h"
 
 int main(int argc, char *argv[])
 {
