@@ -13,10 +13,14 @@
 #include <unistd.h>
 
 #if defined(_WIN32)
+
+    #undef _WIN32_WINNT
+    #define _WIN32_WINNT 0x0600
+    
     #include <winsock2.h>
     #include <winsock.h>
     #include <ws2tcpip.h>
-    
+    #include <synchapi.h>
     #include <windows.h>
 
     typedef uint32_t in_addr_t;
@@ -57,7 +61,7 @@
 
 #include "pi_sock.h"
 #include "pi_mmap.h"
-#
+#include "pi_thread.h"
 // #include "piapi.h"
 
 #endif
