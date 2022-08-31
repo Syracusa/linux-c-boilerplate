@@ -14,6 +14,7 @@ set(SOURCES ${CORE_SOURCES}
 add_executable(bpserver ${SOURCES})
 
 target_link_libraries(bpserver PUBLIC bp)
+target_link_libraries(bpserver PUBLIC piapi)
 
 target_include_directories(bpserver PUBLIC
                           "${PROJECT_BINARY_DIR}"

@@ -1,6 +1,8 @@
 # Build dir
 builddir
 build
+winbuild
+*.cmake
 
 # Prerequisites
 *.d
