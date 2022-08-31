@@ -38,6 +38,7 @@ int pi_udpsock_send(int fd,
     WSAStringToAddressA(receiver_ip, AF_INET, NULL,
                          (struct sockaddr *)&receiver_addr,
                         &socklen);
+    receiver_addr.sin_port = htons(rport_u16);
 #endif
     int sendres = sendto(fd, data, len, 0,
                          (struct sockaddr *)&receiver_addr,
@@ -68,6 +69,14 @@ int pi_udpsock_bind(char *ipaddr,
                     int port,
                     char *dev)
 {
+#ifdef __WIN32
+    static int init = 0;
+    if (init == 0){
+        WSADATA wsadata;
+        WSAStartup(MAKEWORD(2,2),&wsadata);
+        init = 1;
+    }
+#endif
     int reuse = 1;
     int sd, SOCK_LEN;
     struct sockaddr_in addr;
@@ -77,19 +86,23 @@ int pi_udpsock_bind(char *ipaddr,
         ipaddr = "0.0.0.0";
     }
 
-    if ((sd = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
+    sd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (sd < 0)
     {
         printf("socket fail (ip=%s port=%d) : %s\n",
                ipaddr, port, strerror(errno));
+#ifdef __WIN32
+        printf("Error code : %d\n", WSAGetLastError());
+#endif
     }
 
+#ifndef __WIN32
     if (setsockopt(sd, SOL_SOCKET, SO_REUSEADDR,
                    (char *)&reuse, sizeof(reuse)) < 0)
     {
         printf("Setting SO_REUSEADDR Error!!\n");
     }
-
-#ifndef __WIN32
+    
     if (dev != NULL)
     {
         if (setsockopt(sd, SOL_SOCKET, SO_BINDTODEVICE,
