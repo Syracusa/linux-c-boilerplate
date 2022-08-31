@@ -1,11 +1,11 @@
+#include <stdio.h>
+#include <errno.h>
 
-#include <arpa/inet.h>
-#include <sys/socket.h>
-#include "log.h"
+#include "piapi.h"
 
-int udpsock_recv(int fd,
-                 void *recvbuf,
-                 int *inout_bufsize)
+int pi_udpsock_recv(int fd,
+                    void *recvbuf,
+                    int *inout_bufsize)
 {
     struct sockaddr_in rxaddr;
     socklen_t socklen = sizeof(struct sockaddr_in);
@@ -15,16 +15,15 @@ int udpsock_recv(int fd,
                               0, (struct sockaddr *)&rxaddr, &socklen);
     if (*inout_bufsize < 0)
     {
-        LOGF("UDP Socket recv fail(FD %d\n", fd);
-        PRT_ERRNO();
+        fprintf(stderr, "UDP Socket recv fail(FD %d\n", fd);
     }
 }
 
-int udpsock_send(int fd,
-                 char *receiver_ip,
-                 int receiver_port,
-                 void *data,
-                 int len)
+int pi_udpsock_send(int fd,
+                    char *receiver_ip,
+                    int receiver_port,
+                    void *data,
+                    int len)
 {
     struct sockaddr_in receiver_addr;
 
@@ -32,17 +31,22 @@ int udpsock_send(int fd,
 
     uint16_t rport_u16 = receiver_port;
     receiver_addr.sin_port = htons(rport_u16);
-    inet_aton(receiver_ip, &receiver_addr.sin_addr);
-
+#ifndef __WIN32
+    inet_pton(AF_INET, receiver_ip, &receiver_addr.sin_addr);
+#else
+    int socklen = sizeof(receiver_addr);
+    WSAStringToAddressA(receiver_ip, AF_INET, NULL,
+                         (struct sockaddr *)&receiver_addr,
+                        &socklen);
+#endif
     int sendres = sendto(fd, data, len, 0,
                          (struct sockaddr *)&receiver_addr,
                          sizeof(receiver_addr));
 
     if (sendres < 0)
     {
-        LOGF("UDP Socket send fail(FD %d To %s %d)\n",
-             fd, receiver_ip, receiver_port);
-        PRT_ERRNO();
+        fprintf(stderr, "UDP Socket send fail(FD %d To %s %d)\n",
+                fd, receiver_ip, receiver_port);
     }
 
     return sendres;
@@ -60,9 +64,9 @@ static void set_inetaddr(struct sockaddr_in *addr,
     addr->sin_port = htons(port);
 }
 
-int udpsock_bind(char *ipaddr,
-                 int port,
-                 char *dev)
+int pi_udpsock_bind(char *ipaddr,
+                    int port,
+                    char *dev)
 {
     int reuse = 1;
     int sd, SOCK_LEN;
@@ -75,35 +79,33 @@ int udpsock_bind(char *ipaddr,
 
     if ((sd = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
     {
-        LOGF("socket fail (ip=%s port=%d) : %s\n",
-             ipaddr, port, strerror(errno));
-        PRT_ERRNO();
+        printf("socket fail (ip=%s port=%d) : %s\n",
+               ipaddr, port, strerror(errno));
     }
 
     if (setsockopt(sd, SOL_SOCKET, SO_REUSEADDR,
                    (char *)&reuse, sizeof(reuse)) < 0)
     {
-        LOGF("Setting SO_REUSEADDR Error!!\n");
-        PRT_ERRNO();
+        printf("Setting SO_REUSEADDR Error!!\n");
     }
 
+#ifndef __WIN32
     if (dev != NULL)
     {
         if (setsockopt(sd, SOL_SOCKET, SO_BINDTODEVICE,
                        dev, sizeof(dev)) < 0)
         {
-            LOGF("SO_BINDTODEVICE (%s) ERROR!\n", strerror(errno));
-            PRT_ERRNO();
+            printf("SO_BINDTODEVICE (%s) ERROR!\n", strerror(errno));
         }
     }
-
+#endif
     set_inetaddr(&addr, ipaddr, port);
 
     SOCK_LEN = sizeof(addr);
     if (bind(sd, (struct sockaddr *)&addr, SOCK_LEN) < 0)
     {
-        LOGF("Bind fail (ip=%s port=%d) : %s\n",
-             ipaddr, port, strerror(errno));
+        printf("Bind fail (ip=%s port=%d) : %s\n",
+               ipaddr, port, strerror(errno));
     }
     return sd;
 }

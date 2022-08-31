@@ -22,5 +22,6 @@ target_include_directories(bpserver PUBLIC
                           "${CMAKE_CURRENT_SOURCE_DIR}/config"
                           "${CMAKE_CURRENT_SOURCE_DIR}/netutil"
                           "${CMAKE_CURRENT_SOURCE_DIR}/util"
-                          "${PROJECT_SOURCE_DIR}/include"
+                          "${PROJECT_SOURCE_DIR}/include/bp"
+                          "${PROJECT_SOURCE_DIR}/include/piapi"
                           )

@@ -8,5 +8,6 @@ target_link_libraries(testapp PUBLIC piapi)
 # so that we will find TutorialConfig.h
 target_include_directories(testapp PUBLIC
                           "${PROJECT_BINARY_DIR}"
-                          "${PROJECT_SOURCE_DIR}/include"
+                          "${PROJECT_SOURCE_DIR}/include/bp"
+                          "${PROJECT_SOURCE_DIR}/include/piapi"
                           )

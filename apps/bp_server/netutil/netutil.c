@@ -1,8 +1,7 @@
 
-#include <arpa/inet.h>
-#include <sys/socket.h>
 #include <stdio.h>
 
+#include "piapi.h"
 #include "netutil.h"
 
 void be32_to_ipstr(in_addr_t addr, char *buf)

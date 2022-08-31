@@ -2,7 +2,7 @@
 #include <signal.h>
 
 #include "app.h"
-#include "sock.h"
+#include "piapi.h"
 
 AppContext app;
 
@@ -11,7 +11,7 @@ static void init_io(IoContext *ioc)
     ioc->blocktime.tv_sec = 1;
     ioc->blocktime.tv_usec = 0;
 
-    ioc->udp_sock = udpsock_bind(app.cfg.ipstr, app.cfg.port, NULL);
+    ioc->udp_sock = pi_udpsock_bind(app.cfg.ipstr, app.cfg.port, NULL);
     if (ioc->udp_sock < 0)
     {
         LOGF("UDP Socket bind fail\n");

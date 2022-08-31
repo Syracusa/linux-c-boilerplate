@@ -2,6 +2,7 @@
     "files.associations": {
         "type_traits": "c",
         "select.h": "c",
-        "signal.h": "c"
+        "signal.h": "c",
+        "winsock2.h": "c"
     }
 }

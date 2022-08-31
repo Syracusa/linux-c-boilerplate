@@ -1,2 +1,2 @@
 add_subdirectory(bp)
-add_subdirectory(platform)
+add_subdirectory(piapi)
