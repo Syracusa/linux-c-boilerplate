@@ -7,8 +7,9 @@ project(linuxcbp
 if (${CMAKE_SYSTEM_NAME} STREQUAL Windows)
 
 else()
-        # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=thread")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
+        # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=thread")
 endif()
 
 

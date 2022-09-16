@@ -1,3 +1,2 @@
-add_subdirectory(mmap)
-add_subdirectory(thread)
-add_subdirectory(dgram)
+add_subdirectory(piapi)
+add_subdirectory(timer)
