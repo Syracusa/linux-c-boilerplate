@@ -4,7 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/apps/bp_server/config"
+                "${workspaceFolder}/apps/bp_server/config",
+                "/usr/share/mingw-w64/include/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

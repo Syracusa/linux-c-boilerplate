@@ -1,31 +1,16 @@
-#include <string.h>
+#define _GNU_SOURCE
+
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdint.h>
+#include <errno.h>
 
+#include "piapi.h"
 
-#define LIBINFO_BUFSIZE 300
-char *get_buildtime()
-{
-    /* Get build time */
-    char _date[] = __DATE__;
-    char _time[] = __TIME__;
-
-    /* Init buffer */
-    static char libinfo[LIBINFO_BUFSIZE];
-    libinfo[0] = '\0';
-
-    /* Write App Info */
-    strcat(libinfo, "Build Date : ");
-    strcat(libinfo, _date);
-
-    strcat(libinfo, "\nBuild Time : ");
-    strcat(libinfo, _time);
-
-    strcat(libinfo, "\n");
-
-    return libinfo;
-}
-
-void hex_dump(void *addr, int len, FILE* stream)
+static void hex_dump(void *addr, int len, FILE* stream)
 {
    fprintf(stream, "length of hexdump = %d\n", len);
    int            i;
@@ -66,4 +51,33 @@ void hex_dump(void *addr, int len, FILE* stream)
 
    // And print the final ASCII bit.
    fprintf(stream, " %s\n", buff);
+}
+#define WBUFSZ  4000
+#define WNUM    100000
+int main(){
+    init_mmapbuf();
+    
+    char buf[WBUFSZ];
+    memset(buf, 0xfa, WBUFSZ);
+    
+    for (int i = 0; i < WNUM; i++){
+        fprintf(stderr, "Try write Seq:%d\n", i);
+        write_mmapbuf(i * WBUFSZ, buf, WBUFSZ);
+    }
+
+    int failcnt = 0;
+    for (int i = 0; i < WNUM; i++){
+        fprintf(stderr, "Try check Seq:%d\n", i);
+        int cmpres = memcmp(((uint8_t*)get_mmap_ptr()) + i * WBUFSZ, buf, WBUFSZ);
+        if (cmpres != 0){
+            hex_dump(((uint8_t*)get_mmap_ptr()) + i * WBUFSZ, WBUFSZ, stdout);
+            failcnt++;
+            fprintf(stderr, "FAIL(%d)\n", cmpres);
+        }
+    }
+
+    fprintf(stderr, "FAIL COUNT : %d\n", failcnt);
+
+    free_mmapbuf();
+    return 0;
 }

@@ -1,0 +1,2 @@
+cd ../winbuild
+make clean

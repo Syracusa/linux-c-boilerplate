@@ -1,6 +1,6 @@
+#include "piapi.h"
 #include "server.h"
 #include "log.h"
-#include "sock.h"
 #include "util.h"
 
 #define UDP_BUFSIZE 5000
@@ -16,7 +16,7 @@ static void server_udp_recv()
 {
     static char recvbuf[UDP_BUFSIZE];
     int recvlen = UDP_BUFSIZE;
-    udpsock_recv(app.ioc.udp_sock, recvbuf, &recvlen);
+    pi_udpsock_recv(app.ioc.udp_sock, recvbuf, &recvlen);
 
     hex_dump(recvbuf, recvlen, stderr);
 }
@@ -53,7 +53,7 @@ static void send_dummy()
 {
     char dummydata[100] = "Hello world!\n";
 
-    udpsock_send(app.ioc.udp_sock,
+    pi_udpsock_send(app.ioc.udp_sock,
                  app.cfg.target_ipstr,
                  app.cfg.target_port,
                  dummydata,

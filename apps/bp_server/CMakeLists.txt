@@ -14,6 +14,7 @@ set(SOURCES ${CORE_SOURCES}
 add_executable(bpserver ${SOURCES})
 
 target_link_libraries(bpserver PUBLIC bp)
+target_link_libraries(bpserver PUBLIC piapi)
 
 target_include_directories(bpserver PUBLIC
                           "${PROJECT_BINARY_DIR}"
@@ -21,5 +22,6 @@ target_include_directories(bpserver PUBLIC
                           "${CMAKE_CURRENT_SOURCE_DIR}/config"
                           "${CMAKE_CURRENT_SOURCE_DIR}/netutil"
                           "${CMAKE_CURRENT_SOURCE_DIR}/util"
-                          "${PROJECT_SOURCE_DIR}/include"
+                          "${PROJECT_SOURCE_DIR}/include/bp"
+                          "${PROJECT_SOURCE_DIR}/include/piapi"
                           )

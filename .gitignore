@@ -1,6 +1,7 @@
 # Build dir
 builddir
 build
+winbuild
 
 # Prerequisites
 *.d
