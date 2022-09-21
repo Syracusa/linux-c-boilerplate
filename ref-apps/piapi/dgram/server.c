@@ -1,7 +1,7 @@
 #include "piapi.h"
 
 int main(){
-    int sock = pi_udpsock_bind("0.0.0.0", 39992, NULL);
+    int sock = pi_inet_sock_bind("0.0.0.0", 39992, NULL, SOCK_DGRAM);
 
     char recvbuf[100];
     while (1){

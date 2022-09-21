@@ -36,10 +36,10 @@ int pi_udpsock_send(int fd,
 #else
     int socklen = sizeof(receiver_addr);
     WSAStringToAddressA(receiver_ip, AF_INET, NULL,
-                         (struct sockaddr *)&receiver_addr,
+                        (struct sockaddr *)&receiver_addr,
                         &socklen);
-    receiver_addr.sin_port = htons(rport_u16);
 #endif
+
     int sendres = sendto(fd, data, len, 0,
                          (struct sockaddr *)&receiver_addr,
                          sizeof(receiver_addr));
@@ -65,15 +65,106 @@ static void set_inetaddr(struct sockaddr_in *addr,
     addr->sin_port = htons(port);
 }
 
-int pi_udpsock_bind(char *ipaddr,
+int BindSocket(int type, int port)
+{
+	int sd, SOCK_LEN;
+	struct sockaddr_in addr;
+
+	if ((sd = socket(AF_INET, type, 0)) < 0)
+	{
+		printf("[BindSocket] socket fail (port=%d) : %s\n",
+			   port,
+			   strerror(errno));
+	}
+
+	SetInetAddr(&addr, port);
+
+	SOCK_LEN = sizeof(addr);
+	if (bind(sd, (struct sockaddr *)&addr, SOCK_LEN) < 0)
+	{
+		printf("[BindSocket] bind fail (port=%d) : %s\n",
+			   port,
+			   strerror(errno));
+	}
+#if 0
+	struct timeval read_timeout;
+	read_timeout.tv_sec = 0;
+	read_timeout.tv_usec = 10;
+	setsockopt(sd, SOL_SOCKET, SO_RCVTIMEO,
+			   &read_timeout, sizeof(read_timeout));
+#endif
+	return sd;
+}
+
+int pi_tcpsock_server(char *ipaddr,
+                      int port,
+                      char *dev)
+{
+    int tcpsock = pi_inet_sock_bind(ipaddr, port, dev, SOCK_STREAM);
+
+    int lres = listen(tcpsock, 1);
+    if (lres == 0){
+        printf("TCP Listen Success\n");
+    } else {
+        printf("TCP Listen Fail %s\n", strerror(errno));
+    }
+
+    struct sockaddr_in addr;
+    unsigned int addr_len = sizeof(addr);
+
+    int sock = accept(tcpsock, (struct sockaddr*) &addr, &addr_len);
+    if (sock > 0){
+        printf("TCP Accept Success %d\n", sock);
+    } else {
+        printf("TCP Accept Fail %s\n", strerror(errno));
+    }
+
+    return sock;
+}
+
+int pi_tcpsock_client(char *ipaddr,
+                      int port,
+                      char *dev)
+{
+    int sock = pi_inet_sock_bind(ipaddr, port, dev, SOCK_STREAM);
+    uint16_t u16port = port;
+    struct sockaddr_in server_addr;
+    
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(u16port);
+
+#ifndef __WIN32
+    inet_pton(AF_INET, ipaddr, &server_addr.sin_addr);
+#else
+    int socklen = sizeof(server_addr);
+    WSAStringToAddressA(ipaddr, AF_INET, NULL,
+                        (struct sockaddr *)&server_addr,
+                        &socklen);
+#endif
+    unsigned int addr_len = sizeof(server_addr);
+    int cres;
+
+    cres = connect(sock, (struct sockaddr*)&server_addr, addr_len);
+    if (cres == 0){
+        printf("TCP Connect Success\n");
+    } else {
+        printf("TCP Connect Fail %s\n", strerror(errno));
+    }
+
+    return sock;
+}
+
+int pi_inet_sock_bind(char *ipaddr,
                     int port,
-                    char *dev)
+                    char *dev,
+                    int sock_type)
 {
 #ifdef __WIN32
     static int init = 0;
-    if (init == 0){
+    if (init == 0)
+    {
         WSADATA wsadata;
-        WSAStartup(MAKEWORD(2,2),&wsadata);
+        WSAStartup(MAKEWORD(2, 2), &wsadata);
         init = 1;
     }
 #endif
@@ -86,7 +177,7 @@ int pi_udpsock_bind(char *ipaddr,
         ipaddr = "0.0.0.0";
     }
 
-    sd = socket(AF_INET, SOCK_DGRAM, 0);
+    sd = socket(AF_INET, sock_type, 0);
     if (sd < 0)
     {
         printf("socket fail (ip=%s port=%d) : %s\n",
@@ -102,7 +193,7 @@ int pi_udpsock_bind(char *ipaddr,
     {
         printf("Setting SO_REUSEADDR Error!!\n");
     }
-    
+
     if (dev != NULL)
     {
         if (setsockopt(sd, SOL_SOCKET, SO_BINDTODEVICE,

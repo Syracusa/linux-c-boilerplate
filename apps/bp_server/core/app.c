@@ -11,7 +11,10 @@ static void init_io(IoContext *ioc)
     ioc->blocktime.tv_sec = 1;
     ioc->blocktime.tv_usec = 0;
 
-    ioc->udp_sock = pi_udpsock_bind(app.cfg.ipstr, app.cfg.port, NULL);
+    ioc->udp_sock = pi_inet_sock_bind(app.cfg.ipstr,
+                                      app.cfg.port,
+                                      NULL,
+                                      SOCK_DGRAM);
     if (ioc->udp_sock < 0)
     {
         LOGF("UDP Socket bind fail\n");
@@ -25,11 +28,12 @@ static void init_io(IoContext *ioc)
     FD_SET(ioc->udp_sock, &ioc->fds_env);
 }
 
-void quit(){
+void quit()
+{
     LOGF("App recived interrupt signal\n");
 }
 
-void init_app(char* config_filename)
+void init_app(char *config_filename)
 {
     signal(SIGINT, quit);
     memset(&app, 0x00, sizeof(AppContext));
