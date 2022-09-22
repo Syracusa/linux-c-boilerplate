@@ -36,9 +36,22 @@ int main(int argc, char* argv[])
     if (sock < 1){
         printf("Get tcpsock fail %d\n", sock);
     }
- 
-    write(sock, buf, 100);
-    read(sock, buf, 100);
+ #ifdef __WIN32
+    int wlen = send(sock, buf, 100, 0);
+    int rlen = recv(sock, buf, 100, 0);
+#else
+    int wlen = write(sock, buf, 100);
+    int rlen = read(sock, buf, 100);
+#endif
+    if (wlen <= 0 || rlen <= 0){
+#ifdef __WIN32
+        printf("Error code %d %d  %d\n",wlen, rlen, WSAGetLastError());
+#else
+        printf("Error. %d, %d %s\n",wlen, rlen, strerror(errno));
+#endif
+    } else {
+        printf("Write %d bytes and Read %d bytes\n", wlen, rlen);
+        printf("Recvfrom %s... %s", peer, buf);
+    }
 
-    printf("Recvfrom %s... %s", peer, buf);
 }

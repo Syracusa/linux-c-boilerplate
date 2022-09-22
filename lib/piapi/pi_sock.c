@@ -4,6 +4,19 @@
 
 #include "piapi.h"
 
+#ifdef __WIN32
+void try_winsock_init(){
+    static int winsock_inited = 0;
+    if (winsock_inited == 0){
+        winsock_inited = 1;
+
+        WSADATA wsadata;
+        WSAStartup(MAKEWORD(2, 2), &wsadata);
+    }
+}
+
+#endif
+
 int pi_udpsock_recv(int fd,
                     void* recvbuf,
                     int* inout_bufsize)
@@ -128,6 +141,9 @@ int pi_tcpsock_client(char* ipaddr,
                     sock, strerror(errno));
         }
     } else {
+#ifdef __WIN32
+        try_winsock_init();
+#endif
         fprintf(stderr, "No bind to port\n");
         sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
         if (sock == -1) {
@@ -180,13 +196,7 @@ int pi_inet_sock_bind(char* ipaddr,
                       int sock_type)
 {
 #ifdef __WIN32
-    static int init = 0;
-    if (init == 0)
-    {
-        WSADATA wsadata;
-        WSAStartup(MAKEWORD(2, 2), &wsadata);
-        init = 1;
-    }
+        try_winsock_init();
 #endif
     int reuse = 1;
     int sd, SOCK_LEN;
