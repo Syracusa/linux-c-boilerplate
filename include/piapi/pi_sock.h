@@ -20,9 +20,10 @@ int BindSocket(int type, int port);
 int pi_tcpsock_server(char *ipaddr,
                       int port,
                       char *dev);
-
+                      
 int pi_tcpsock_client(char *ipaddr,
-                      int port,
+                      int recvport,
+                      int sendport,
                       char *dev);
 
 int pi_inet_sock_bind(char *ipaddr,
