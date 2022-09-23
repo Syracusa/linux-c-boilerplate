@@ -164,7 +164,8 @@ int pi_tcpsock_client(char* ipaddr,
                                    (struct sockaddr*)&server_addr,
                                    &socklen);
     if (tres != 0) {
-        printf("WSAStringToAddressA error code : %d\n", WSAGetLastError());
+        printf("WSAStringToAddressA error\n");
+        print_error();
     }
 #endif
 
@@ -210,11 +211,8 @@ int pi_inet_sock_bind(char* ipaddr,
     sd = socket(AF_INET, sock_type, 0);
     if (sd < 0)
     {
-        printf("socket fail (ip=%s port=%d) : %s\n",
-               ipaddr, port, strerror(errno));
-#ifdef __WIN32
-        printf("Error code : %d\n", WSAGetLastError());
-#endif
+        printf("socket fail (ip=%s port=%d)\n", ipaddr, port);
+        print_error();
     }
 
 #ifndef __WIN32

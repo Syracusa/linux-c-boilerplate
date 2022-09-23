@@ -58,6 +58,7 @@
 
 #endif
 
+void print_error();
 
 #include "pi_sock.h"
 #include "pi_mmap.h"
