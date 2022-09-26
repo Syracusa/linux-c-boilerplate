@@ -1,5 +1,5 @@
-#ifndef PLATFORM_H
-#define PLATFORM_H
+#ifndef PIAPI_H
+#define PIAPI_H
 
 #define _GNU_SOURCE
 
