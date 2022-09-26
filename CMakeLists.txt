@@ -1,23 +1,18 @@
 cmake_minimum_required(VERSION 3.10)
-project(linuxcbp
+project(___PROJECTNAME___
         VERSION 1.0
-        DESCRIPTION "Linux C Boilerplate"
+        DESCRIPTION "Project ___PROJECTNAME___"
         LANGUAGES C)
-        
-if (${CMAKE_SYSTEM_NAME} STREQUAL Windows)
-
-else()
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
-        # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=thread")
-endif()
-
-
+              
+## Disable this when publish
 set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
+# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=thread")
 
+add_subdirectory(ext)
 add_subdirectory(lib)
 add_subdirectory(apps)
-add_subdirectory(ref-apps)
 
 include(CTest)
 add_subdirectory(test)

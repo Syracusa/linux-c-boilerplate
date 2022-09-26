@@ -1,5 +1,0 @@
-add_subdirectory(mmap)
-add_subdirectory(thread)
-add_subdirectory(dgram)
-add_subdirectory(mutex)
-add_subdirectory(tcp)

@@ -1,1 +1,1 @@
-../build/apps/bp_server/bpserver server.cfg
+../build/apps/___PROJECTNAME____server/___PROJECTNAME____server server.cfg

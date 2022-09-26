@@ -1,2 +1,2 @@
-add_subdirectory(bp_server)
-add_subdirectory(testapp)
+add_subdirectory(___PROJECTNAME____server)
+add_subdirectory(___PROJECTNAME____testapp)

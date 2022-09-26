@@ -1,0 +1,1 @@
+add_library(iniparser iniparser.c dictionary.c)
