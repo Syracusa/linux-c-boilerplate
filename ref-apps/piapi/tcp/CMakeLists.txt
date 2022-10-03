@@ -1,4 +1,4 @@
 # add the executable
-add_executable(tcptest tcptest.c)
+add_executable(tcpref tcpref.c)
 
-target_link_libraries(tcptest PUBLIC piapi)
+target_link_libraries(tcpref PUBLIC piapi)

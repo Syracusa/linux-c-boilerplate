@@ -1,4 +1,4 @@
-add_executable(udptest test1.c)
+add_executable(udptest udptest.c)
 
 target_link_libraries(udptest PUBLIC piapi)
 

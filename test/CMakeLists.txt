@@ -1,2 +1,2 @@
 add_subdirectory(udptest)
-add_subdirectory(test2)
+add_subdirectory(tcptest)
