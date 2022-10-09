@@ -2,10 +2,13 @@
 #include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <arpa/inet.h>
 #include <netinet/ip.h>
 #include <netinet/in.h>
+
+#include "sock.h"
 
 int udpsock_recv(int fd,
                     void* recvbuf,

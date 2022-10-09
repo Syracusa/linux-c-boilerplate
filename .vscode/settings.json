@@ -7,6 +7,7 @@
         "piapi.h": "c",
         "synchapi.h": "c",
         "cfg.h": "c",
-        "app.h": "c"
+        "app.h": "c",
+        "boilerplatelib.h": "c"
     }
 }

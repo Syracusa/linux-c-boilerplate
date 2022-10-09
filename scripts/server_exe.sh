@@ -1,1 +1,0 @@
-../build/apps/___PROJECTNAME____server/___PROJECTNAME____server server.cfg

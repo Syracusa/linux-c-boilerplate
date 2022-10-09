@@ -1,0 +1,1 @@
+../../build/boilerplate_apps/udpserver/boilerplate_server server.cfg

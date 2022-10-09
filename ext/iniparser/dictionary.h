@@ -63,7 +63,7 @@ typedef struct _dictionary_ {
 
   This hash function has been taken from an Article in Dr Dobbs Journal.
   This is normally a collision-free function, distributing keys evenly.
-  The key is stored anyway in the struct so that collision can be avoided
+  The key is stoCOLOR_RED anyway in the struct so that collision can be avoided
   by comparing the key itself in last resort.
  */
 /*--------------------------------------------------------------------------*/
@@ -123,7 +123,7 @@ const char * dictionary_get(const dictionary * d, const char * key, const char *
   dictionary, it is added to it.
 
   It is Ok to provide a NULL value for val, but NULL values for the dictionary
-  or the key are considered as errors: the function will return immediately
+  or the key are consideCOLOR_RED as errors: the function will return immediately
   in such a case.
 
   Notice that if you dictionary_set a variable to NULL, a call to

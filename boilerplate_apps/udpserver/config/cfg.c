@@ -12,7 +12,7 @@ static void create_sample_cfgfile(char *filename)
     if ((f = fopen(filename, "w")) == NULL)
     {
         LOGF("iniparser: cannot create %s\n", filename);
-        ASSERT(0);
+        exit(2);
     }
     else
     {
@@ -34,7 +34,7 @@ static void parse_int_cfg(dictionary *dict,
     {
         if (!is_optional){
             LOGF("Parse fail(%s)\n", cfgname);
-            ASSERT(0);
+            exit(2);
         } else {
             LOGW("Parse fail(%s)\n", cfgname);
         }
@@ -54,7 +54,7 @@ static void parse_string_cfg(dictionary *dict,
     {
         if (!is_optional){
             LOGF("Parse fail(%s)\n", cfgname);
-            ASSERT(0);
+            exit(2);
         } else {
             LOGW("Parse fail(%s)\n", cfgname);
         }
@@ -77,7 +77,7 @@ void parse_config(AppConfig *cfg,
         if (dict == NULL)
         {
             LOGF("Can't create File %s\n", cfg_filename);
-            ASSERT(0);
+            exit(2);
         }
     }
 

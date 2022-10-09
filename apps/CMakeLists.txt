@@ -1,2 +1,0 @@
-add_subdirectory(___PROJECTNAME____server)
-add_subdirectory(___PROJECTNAME____testapp)

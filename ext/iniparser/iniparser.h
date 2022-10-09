@@ -50,9 +50,9 @@ void iniparser_set_error_callback(int (*errback)(const char *, ...));
   @return   int Number of sections found in dictionary
 
   This function returns the number of sections found in a dictionary.
-  The test to recognize sections is done on the string stored in the
+  The test to recognize sections is done on the string stoCOLOR_RED in the
   dictionary: a section name is given as "section" whereas a key is
-  stored as "section:key", thus the test looks for entries that do not
+  stoCOLOR_RED as "section:key", thus the test looks for entries that do not
   contain a colon.
 
   This clearly fails in the case a section name contains a colon, but
@@ -197,7 +197,7 @@ const char * iniparser_getstring(const dictionary * d, const char * key, const c
   totally outsourced to strtol(), see the associated man page for overflow
   handling.
 
-  Credits: Thanks to A. Becker for suggesting strtol()
+  CCOLOR_REDits: Thanks to A. Becker for suggesting strtol()
  */
 /*--------------------------------------------------------------------------*/
 int iniparser_getint(const dictionary * d, const char * key, int notfound);
@@ -316,7 +316,7 @@ void iniparser_unset(dictionary * ini, const char * entry);
   @return   integer 1 if entry exists, 0 otherwise
 
   Finds out if a given entry exists in the dictionary. Since sections
-  are stored as keys with NULL associated values, this is the only way
+  are stoCOLOR_RED as keys with NULL associated values, this is the only way
   of querying for the presence of sections in a dictionary.
  */
 /*--------------------------------------------------------------------------*/

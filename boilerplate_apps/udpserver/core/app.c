@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <signal.h>
-
 #include <sys/socket.h>
+#include <stdlib.h>
 
 #include "sock.h"
 #include "app.h"
@@ -20,7 +20,7 @@ static void init_io(IoContext *ioc)
     if (ioc->udp_sock < 0)
     {
         LOGF("UDP Socket bind fail\n");
-        ASSERT(0);
+        exit(2);
     }
     if (ioc->fdmax <= ioc->udp_sock)
     {

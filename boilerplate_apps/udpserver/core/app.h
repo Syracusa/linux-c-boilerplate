@@ -1,6 +1,7 @@
 #ifndef APP_H
 #define APP_H
 
+#include <sys/select.h>
 #include "log.h"
 #include "cfg.h"
 

@@ -1,6 +1,6 @@
-add_library(___PROJECTNAME___ ___PROJECTNAME___.c)
+add_library(boilerplatelib boilerplatelib.c)
 
-target_include_directories(___PROJECTNAME___ PUBLIC
+target_include_directories(boilerplatelib PUBLIC
                           "${PROJECT_BINARY_DIR}"
-                          "${PROJECT_SOURCE_DIR}/lib/___PROJECTNAME___"
-                          )
+                          "${PROJECT_SOURCE_DIR}/lib/"
+                          ) 

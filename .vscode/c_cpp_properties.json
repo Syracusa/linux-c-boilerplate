@@ -4,8 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/apps/bp_server/config",
-                "/usr/share/mingw-w64/include/**"
+                "${workspaceFolder}/boilerplate_apps/udpserver/util",
+                "${workspaceFolder}/boilerplate_apps/udpserver/config"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

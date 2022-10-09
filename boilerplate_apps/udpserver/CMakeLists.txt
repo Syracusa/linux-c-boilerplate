@@ -9,12 +9,12 @@ set(SOURCES ${CORE_SOURCES}
             ${UTIL_SOURCES}
             ${CONFIG_LIB_SOURCES})
 
-add_executable(___PROJECTNAME____server ${SOURCES})
+add_executable(boilerplate_server ${SOURCES})
 
-target_link_libraries(___PROJECTNAME____server PUBLIC ___PROJECTNAME___)
-target_link_libraries(___PROJECTNAME____server PUBLIC iniparser)
+target_link_libraries(boilerplate_server PUBLIC boilerplatelib)
+target_link_libraries(boilerplate_server PUBLIC iniparser)
 
-target_include_directories(___PROJECTNAME____server PUBLIC
+target_include_directories(boilerplate_server PUBLIC
                           "${PROJECT_BINARY_DIR}"
                           "${CMAKE_CURRENT_SOURCE_DIR}/core"
                           "${CMAKE_CURRENT_SOURCE_DIR}/config"

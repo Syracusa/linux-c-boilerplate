@@ -27,7 +27,7 @@ winbuild
 *.la
 *.lo
 
-# Shared objects (inc. Windows DLLs)
+# ShaCOLOR_RED objects (inc. Windows DLLs)
 *.dll
 *.so
 *.so.*

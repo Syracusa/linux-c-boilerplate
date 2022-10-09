@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
-project(___PROJECTNAME___
+project(linux-c-boilerplate
         VERSION 1.0
-        DESCRIPTION "Project ___PROJECTNAME___"
+        DESCRIPTION "Linux c boilerplate code"
         LANGUAGES C)
               
 ## Disable this when publish
@@ -12,7 +12,4 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
 
 add_subdirectory(ext)
 add_subdirectory(lib)
-add_subdirectory(apps)
-
-include(CTest)
-add_subdirectory(test)
+add_subdirectory(boilerplate_apps)
