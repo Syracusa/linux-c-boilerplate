@@ -4,10 +4,12 @@
 + Local static library build/link example
 
 # How to build
+```
 mkdir build
 cd build
 cmake ..
 make
+```
 
 # Execute test applications
 ## boilerplate_server
