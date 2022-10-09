@@ -180,7 +180,8 @@ int pi_tcpsock_client(char* ipaddr,
         printf("TCP Connect Success\n");
     } else {
         printf("TCP Connect Fail %s:%d %s:%d %x %d %s\n",
-               _be32_to_ipstr_nobuf(server_addr.sin_addr.s_addr), ntohs(server_addr.sin_port),
+               _be32_to_ipstr_nobuf(server_addr.sin_addr.s_addr), 
+               ntohs(server_addr.sin_port),
                ipaddr,
                sendport, server_addr.sin_addr.s_addr, cres, strerror(errno));
 #ifdef __WIN32
