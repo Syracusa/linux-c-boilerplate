@@ -14,6 +14,7 @@ make
 # Execute test applications
 ## boilerplate_server
 + Udp server/client implementation boilerplate code
++ Include Select() example
 ```
 cd scripts/boilerplate_server
 
