@@ -29,9 +29,6 @@ cd scripts/boilerplate_server
 ## linktest
 + Test local library link
 
-## mmap
-+ Memory-mapped file example(TBD)
-
 # Directory
 ```
 apps
