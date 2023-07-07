@@ -8,3 +8,4 @@ target_include_directories(linktest PUBLIC "${PROJECT_SOURCE_DIR}/include")
 
 
 add_executable(sig0 misc/sig0.c)
+add_executable(thread misc/thread.c)
